@@ -11,7 +11,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from engine.dialogue_engine import DialogueEngine
 from project.service.dialogue_service import DialogueService
 from repository.dialogue_repository import DialogueRepository
-from utils import database
+from project.utils import database
+
 
 """
 依赖注入层
@@ -25,16 +26,15 @@ from utils import database
 async def get_dialogue_engine():
     return DialogueEngine()
 
-# 创建仓库层对象
-async def get_repository():
-    session: AsyncSession = Depends(get_session)
-    return DialogueRepository(session=session)
-
 # 数据库操作session对象
 async def get_session():
     async with database.async_session() as session:
         # 暂停执行，等待调用者使用session
         yield session
+
+# 创建仓库层对象
+async def get_repository(session: AsyncSession = Depends(get_session)):
+    return DialogueRepository(session=session)
 
 
 async def get_dialogue_service(

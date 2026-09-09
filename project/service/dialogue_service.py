@@ -3,7 +3,7 @@
 @Time:2026/9/8
 @Desc: 聊天服务层
 """
-
+from domain.message import BotMessage
 from domain.state import DialogueState
 from engine.dialogue_engine import DialogueEngine
 from project.domain.message import UserMessage, ProcessResult
@@ -28,7 +28,15 @@ class DialogueService:
         await self.repository.save_state(state)
 
         # 4 返回engine层处理结果
-        return None
+        return ProcessResult(
+            sender_id=sender_id,
+            message_id=user_message.message_id,
+            messages=[BotMessage(
+                text="你好",
+                object=None
+            )]
+
+        )
 
 
 
