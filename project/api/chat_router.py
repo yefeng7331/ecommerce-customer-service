@@ -71,14 +71,5 @@ async def chat(chat_request: ChatRequest
     # 4.获取service方法返回结果，把service返回类型转换为ChatResponse类型
     chat_response: ChatResponse = _build_chat_response(process_result)
     # 5.返回ChatResponse对象
-    return ChatResponse(
-        sender_id=chat_request.sender_id,
-        message_id=str(uuid.uuid4()),
-        messages=[
-            ChatMessage(
-                text="hello",
-                object=None
-            )
-        ]
-    )
+    return chat_response
 
