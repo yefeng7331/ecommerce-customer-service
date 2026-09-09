@@ -25,9 +25,9 @@ async def close_http_client():
 async def test():
     init_http_client()
     # restful风格： 查询get 添加post 修改put 删除delete
-    response = await http_client.get("http://127.0.0.1:18081/users/u1001/orders")
+    response = await http_client.get("http://localhost:18081/users/u1001/orders")
     print(response.json())
-    
+
 
 if __name__ == "__main__":
     asyncio.run(test())
