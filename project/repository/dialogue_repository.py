@@ -9,8 +9,8 @@ from sqlalchemy import select
 from sqlalchemy.dialects.mysql import insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from domain.state import DialogueState
-from repository.orm.dialogue_state import DialogueStateRecord
+from project.domain.state import DialogueState
+from project.repository.orm.dialogue_state import DialogueStateRecord
 
 # 序列化和反序列化
 ## 对象==>json字符串 jump_json
@@ -30,7 +30,7 @@ class DialogueRepository:
         # result = await self.session.execute(sql, {"sid": sender_id})
 
         # orm实现
-        # 不需要编写sql语句，直接使用sqlalchmy封装的方法实现
+        # 不需要编写sql语句，直接使用sqlalchemy封装的方法实现
         sql = select(DialogueStateRecord).where(
             DialogueStateRecord.sender_id == sender_id)
         result = await self.session.execute(sql)

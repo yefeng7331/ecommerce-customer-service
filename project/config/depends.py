@@ -8,9 +8,11 @@
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from engine.dialogue_engine import DialogueEngine
+from project.engine.dialogue_engine import DialogueEngine
+from project.plan.turn_plan import TurnPlanner
+from project.plan.turn_plan_validation import TurnPlanValidation
 from project.service.dialogue_service import DialogueService
-from repository.dialogue_repository import DialogueRepository
+from project.repository.dialogue_repository import DialogueRepository
 from project.utils import database
 
 
@@ -24,7 +26,12 @@ from project.utils import database
 
 # 创建引擎层对象
 async def get_dialogue_engine():
-    return DialogueEngine()
+    turn_planner = TurnPlanner()
+    turn_plan_validation = TurnPlanValidation()
+    return DialogueEngine(
+        turn_planner=turn_planner,
+        turn_plan_validation=turn_plan_validation
+    )
 
 # 数据库操作session对象
 async def get_session():

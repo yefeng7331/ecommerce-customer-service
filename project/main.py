@@ -14,5 +14,4 @@ if __name__ == "__main__":
         "project.api.app:app",
         host=settings.app_host,
         port=settings.app_port,
-
     )

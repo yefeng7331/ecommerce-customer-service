@@ -10,7 +10,7 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 from sqlalchemy.ext.asyncio.engine import create_async_engine
 
-from config.config import settings
+from project.config.config import settings
 
 # 1.定义两个变量
 # engine引擎  session会话  ———异步

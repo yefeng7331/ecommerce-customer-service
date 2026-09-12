@@ -5,12 +5,9 @@
 """
 import uuid
 from dataclasses import asdict
-
 from fastapi import APIRouter, Depends
-
 from project.config.depends import get_dialogue_service
 from project.api.schemas import ChatRequest, ChatResponse, ChatMessage, ChatObject
-
 from project.domain.message import ProcessResult, UserMessage, MessageObject, MessageType
 from project.service.dialogue_service import DialogueService
 
