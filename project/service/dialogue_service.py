@@ -22,7 +22,7 @@ class DialogueService:
         sender_id = user_message.sender_id
         state:DialogueState = await self.repository.load_state(sender_id)
 
-        # todo 2 根据查询历史记录 + 用户问题 调用engine层处理用户消息
+        # 根据查询历史记录 + 用户问题 调用engine层处理用户消息
         process_result:ProcessResult = await self.engine.process_user_message(state, user_message)
 
         # 3 把当前这一次对话，调用repository层保存数据库里面
