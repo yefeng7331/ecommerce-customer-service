@@ -102,8 +102,20 @@ class DialogueEngine:
 
         # 3 校验没有通过，执行反问澄清回复组件
         if not validation_result.valid:
+            # 反问澄清回复组件
             pass
         # 4 校验通过，根据意图识别结果，执行不同轨道
+        if turn_plan.task:
+            # 任务流程
+            pass
+
+        if turn_plan.knowledge:
+            # 知识检索
+            pass
+
+        else:
+            # 闲聊
+            pass
 
         ## 任务流程
 
