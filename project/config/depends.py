@@ -14,7 +14,9 @@ from project.plan.turn_plan_validation import TurnPlanValidation
 from project.service.dialogue_service import DialogueService
 from project.repository.dialogue_repository import DialogueRepository
 from project.utils import database
-
+from task.command.processor import CommandProcessor
+from task.handler import TaskHandler
+from task.lifecycle.responder import TaskLifecycleResponder
 
 """
 依赖注入层
@@ -28,9 +30,14 @@ from project.utils import database
 async def get_dialogue_engine():
     turn_planner = TurnPlanner()
     turn_plan_validation = TurnPlanValidation()
+    task_handler = TaskHandler(
+        command_processor=CommandProcessor(),
+        task_lifecycle=TaskLifecycleResponder(),
+    )
     return DialogueEngine(
         turn_planner=turn_planner,
-        turn_plan_validation=turn_plan_validation
+        turn_plan_validation=turn_plan_validation,
+        task_handler=task_handler,
     )
 
 # 数据库操作session对象

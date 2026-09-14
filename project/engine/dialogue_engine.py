@@ -15,15 +15,17 @@ from project.plan.turn_plan import TurnPlanner
 from project.plan.turn_plan_validation import TurnPlanValidation
 from project.task.flow.loader import FlowLoader
 from project.task.flow.models import FlowCatalog
+from task.handler import TaskHandler
 
 
 class DialogueEngine:
     def __init__(self,turn_planner:TurnPlanner,
-                 turn_plan_validation:TurnPlanValidation
-    ):
+                 turn_plan_validation:TurnPlanValidation,
+                 task_handler:TaskHandler
+                 ):
         self.turn_planner = turn_planner
         self.turn_plan_validation = turn_plan_validation
-
+        self.task_handler = task_handler
 
 
     async def process_user_message(self, state: DialogueState, user_message: UserMessage) -> ProcessResult:
@@ -107,7 +109,13 @@ class DialogueEngine:
         # 4 校验通过，根据意图识别结果，执行不同轨道
         if turn_plan.task:
             # 任务流程
-            pass
+            result = await self.task_handler.handle(
+                commands=turn_plan.task.commands,
+                flows=flow_catalog,
+                state=state,
+                user_message=user_message,
+            )
+            return result
 
         if turn_plan.knowledge:
             # 知识检索
