@@ -15,7 +15,7 @@ from project.plan.turn_plan import TurnPlanner
 from project.plan.turn_plan_validation import TurnPlanValidation
 from project.task.flow.loader import FlowLoader
 from project.task.flow.models import FlowCatalog
-from task.handler import TaskHandler
+from project.task.handler import TaskHandler
 
 
 class DialogueEngine:
@@ -60,6 +60,11 @@ class DialogueEngine:
         state.shared.sessions[-1].turns.append(turn)
 
         # 4.返回处理结果
+        return ProcessResult(
+            sender_id=user_message.sender_id,
+            message_id=user_message.message_id,
+            messages=messages,
+        )
 
     def _prepare_current_session(self, state: DialogueState):
         """

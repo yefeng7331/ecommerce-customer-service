@@ -6,9 +6,9 @@
 """
 from jinja2 import Template
 
-from domain.message import BotMessage
-from domain.state import DialogueState
-from task.response.models import ResponseTemplate, ResponseMode
+from project.domain.message import BotMessage
+from project.domain.state import DialogueState
+from project.task.response.models import ResponseTemplate, ResponseMode
 
 
 class ResponseTemplateRender:

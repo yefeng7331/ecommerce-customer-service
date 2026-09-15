@@ -5,9 +5,9 @@
 这个模块对外调用
 再FlowExecutor的action类型步骤调用这个模块方法实现
 """
-from domain.state import DialogueState
-from task.action.base import ActionCall, Action, ActionResult
-from task.action.register import ActionRegister
+from project.domain.state import DialogueState
+from project.task.action.base import ActionCall, Action, ActionResult
+from project.task.action.register import ActionRegister
 
 
 

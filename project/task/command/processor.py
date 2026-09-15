@@ -7,10 +7,10 @@
 
 
 """
-from domain.state import DialogueState, TaskInstance
-from task.command.models import Command, StartFlowCommand, ResumeTaskCommand, SetSlotsCommand, CancelTaskCommand
-from task.flow.models import FlowCatalog, Flow
-from task.lifecycle.models import TaskEvent
+from project.domain.state import DialogueState, TaskInstance
+from project.task.command.models import Command, StartFlowCommand, ResumeTaskCommand, SetSlotsCommand, CancelTaskCommand
+from project.task.flow.models import FlowCatalog, Flow
+from project.task.lifecycle.models import TaskEvent
 
 
 class CommandProcessor:

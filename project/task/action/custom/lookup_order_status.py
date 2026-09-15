@@ -3,10 +3,10 @@
 @Time:2026/9/15
 @Desc:查询订单状态操作类
 """
-from config.config import Settings
-from domain.state import DialogueState
-from task.action.base import Action, ActionResult
-from utils import http_client
+from project.config.config import Settings
+from project.domain.state import DialogueState
+from project.task.action.base import Action, ActionResult
+from project.utils import http_client
 
 
 # 查询订单状态

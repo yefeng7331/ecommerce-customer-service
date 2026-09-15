@@ -6,9 +6,9 @@
 
 
 """
-from domain.message import BotMessage
-from task.flow.models import FlowCatalog
-from task.lifecycle.models import TaskEvent, TaskStarted, TaskSwitched, TaskCanceled, TaskResumed
+from project.domain.message import BotMessage
+from project.task.flow.models import FlowCatalog
+from project.task.lifecycle.models import TaskEvent, TaskStarted, TaskSwitched, TaskCanceled, TaskResumed
 
 
 class TaskLifecycleResponder:

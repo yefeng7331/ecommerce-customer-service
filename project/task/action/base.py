@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from typing import Any
 
-from domain.state import DialogueState
+from project.domain.state import DialogueState
 
 
 # 封装yaml的action属性值

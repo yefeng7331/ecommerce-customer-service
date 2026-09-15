@@ -2,7 +2,7 @@ import time
 import uuid
 from dataclasses import dataclass, field
 from project.domain.message import UserMessage, BotMessage
-from task.lifecycle.models import TaskEvent, TaskRef, TaskSwitched, TaskStarted, TaskCanceled
+from project.task.lifecycle.models import TaskEvent, TaskRef, TaskSwitched, TaskStarted, TaskCanceled
 
 
 # 一轮对话，一个问题对应一个或者多个回答

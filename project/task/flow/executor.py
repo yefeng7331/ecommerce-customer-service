@@ -4,14 +4,14 @@
 @Desc:任务流程执行器
         这个模块的作用适用于推进流程的步骤
 """
-from domain.message import BotMessage, UserMessage
-from domain.state import DialogueState
-from task.action.base import ActionCall, ActionResult
-from task.action.runner import ActionRunner
-from task.flow.links import FlowStepLink, ConditionalLink, FallbackLink
-from task.flow.models import FlowCatalog, Flow
-from task.flow.steps import FlowStep, StartFlowStep, ResponseFlowStep, CollectSlotStep, ActionFlowStep, EndFlowStep
-from task.response.render import ResponseTemplateRender
+from project.domain.message import BotMessage, UserMessage
+from project.domain.state import DialogueState
+from project.task.action.base import ActionCall, ActionResult
+from project.task.action.runner import ActionRunner
+from project.task.flow.links import FlowStepLink, ConditionalLink, FallbackLink
+from project.task.flow.models import FlowCatalog, Flow
+from project.task.flow.steps import FlowStep, StartFlowStep, ResponseFlowStep, CollectSlotStep, ActionFlowStep, EndFlowStep
+from project.task.response.render import ResponseTemplateRender
 
 
 class FlowExecutor:
@@ -22,12 +22,11 @@ class FlowExecutor:
     async def run_step(self,
                        state: DialogueState,
                        flows: FlowCatalog,
-                       user_messages: UserMessage) -> list[BotMessage]:
+                       ) -> list[BotMessage]:
         """
         执行任务流程的步骤
         :param state: 状态对象
         :param flows: 任务流程目录
-        :param user_messages: 用户消息
         :return: 客服回复
         """
         bot_messages: list[BotMessage] = []
