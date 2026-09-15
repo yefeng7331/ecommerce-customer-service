@@ -6,6 +6,8 @@
 """
 from domain.message import BotMessage, UserMessage
 from domain.state import DialogueState
+from task.action.base import ActionCall, ActionResult
+from task.action.runner import ActionRunner
 from task.flow.links import FlowStepLink, ConditionalLink, FallbackLink
 from task.flow.models import FlowCatalog, Flow
 from task.flow.steps import FlowStep, StartFlowStep, ResponseFlowStep, CollectSlotStep, ActionFlowStep, EndFlowStep
@@ -13,7 +15,8 @@ from task.response.render import ResponseTemplateRender
 
 
 class FlowExecutor:
-    def __init__(self, response_render: ResponseTemplateRender):
+    def __init__(self, response_render: ResponseTemplateRender, action_runner: ActionRunner):
+        self.action_runner: ActionRunner = action_runner
         self.response_render: ResponseTemplateRender = response_render
 
     async def run_step(self,
@@ -90,8 +93,20 @@ class FlowExecutor:
                 """
                 ActionFlowStep
                 执行具体业务的方法，调用中台系统的接口实现具体功能
-                
                 """
+                action_name = step.action
+                action_call = ActionCall(action_name=action_name)
+
+                # 调用action运行器
+                action_result:ActionResult = await self.action_runner.run(state=state, action_call=action_call)
+
+
+                # 为了后面从槽位获取数据渲染
+                state.tasks.active.slots.update(action_result.slot_updates)
+
+                # 推进到下一步
+                self._run_next_step(state, step)
+                continue
 
             if isinstance(step, EndFlowStep):
                 """
@@ -153,7 +168,7 @@ class FlowExecutor:
             return False
 
 
-        pass
+
 
     def get_focused_object_slot_value(self, step, state):
         # focused_object是否为空
@@ -170,7 +185,7 @@ class FlowExecutor:
             state.tasks.active.slots.update({step.slot_name:state.shared.focused_object.id})
             return
 
-        pass
+
 
 
 # eval方法
