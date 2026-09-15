@@ -8,6 +8,8 @@
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from chitchat.chit_chat import Chitchat
+from clarify.clarify_response import ClarifyResponse
 from project.engine.dialogue_engine import DialogueEngine
 from project.plan.turn_plan import TurnPlanner
 from project.plan.turn_plan_validation import TurnPlanValidation
@@ -51,10 +53,14 @@ async def get_dialogue_engine():
         task_lifecycle=TaskLifecycleResponder(),
         flow_executor=flow_executor,
     )
+    clarify_response = ClarifyResponse()
+    chit_chat = Chitchat()
     return DialogueEngine(
         turn_planner=turn_planner,
         turn_plan_validation=turn_plan_validation,
         task_handler=task_handler,
+        clarify_response=clarify_response,
+        chit_chat=chit_chat
     )
 
 # 数据库操作session对象

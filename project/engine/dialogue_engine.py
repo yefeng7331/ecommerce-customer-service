@@ -8,9 +8,11 @@ import time
 import uuid
 from pathlib import Path
 
+from chitchat.chit_chat import Chitchat
+from clarify.clarify_response import ClarifyResponse
 from project.domain.message import UserMessage, ProcessResult, MessageType, BotMessage
 from project.domain.state import DialogueState, Turn
-from project.plan.models import TurnPlan, TurnPlanValidationResult
+from project.plan.models import TurnPlan, TurnPlanValidationResult, ClarifyReason
 from project.plan.turn_plan import TurnPlanner
 from project.plan.turn_plan_validation import TurnPlanValidation
 from project.task.flow.loader import FlowLoader
@@ -21,11 +23,15 @@ from project.task.handler import TaskHandler
 class DialogueEngine:
     def __init__(self,turn_planner:TurnPlanner,
                  turn_plan_validation:TurnPlanValidation,
-                 task_handler:TaskHandler
+                 task_handler:TaskHandler,
+                 clarify_response:ClarifyResponse,
+                 chit_chat:Chitchat,
                  ):
         self.turn_planner = turn_planner
         self.turn_plan_validation = turn_plan_validation
         self.task_handler = task_handler
+        self.clarify_response = clarify_response
+        self.chit_chat = chit_chat
 
 
     async def process_user_message(self, state: DialogueState, user_message: UserMessage) -> ProcessResult:
@@ -110,7 +116,11 @@ class DialogueEngine:
         # 3 校验没有通过，执行反问澄清回复组件
         if not validation_result.valid:
             # 反问澄清回复组件
-            pass
+            return await self.clarify_response.responder(
+                state=state,
+                user_message=user_message,
+                reason=validation_result.reason,
+            )
         # 4 校验通过，根据意图识别结果，执行不同轨道
         if turn_plan.task:
             # 任务流程
@@ -128,7 +138,10 @@ class DialogueEngine:
 
         else:
             # 闲聊
-            pass
+            return await self.chit_chat.handle(
+                user_message=user_message,
+                state=state
+            )
 
         ## 任务流程
 
